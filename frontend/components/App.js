@@ -23,8 +23,17 @@ const initialState = {
 export default class App extends React.Component {
   state = initialState;
   /*Helper Functions*/
-  /* allow for tasks compeleted status to be toggled when clicking on task*/
   /*allow compeleted to be filtered out*/
+  completeTask = id => {
+    this.setState({
+      ...this.state, tasks: this.state.tasks.map(task => {
+        return task.id === id 
+        ? {...task, completed: true} : task
+      })
+    })
+  }
+
+
   addTask = () => {
     const {tasks, 
       form: { id, nameInput, completed } } = this.state;
@@ -54,7 +63,7 @@ export default class App extends React.Component {
 
     return (
       <div>
-        <TodoList tasks={tasks}/>
+        <TodoList tasks={tasks} complete = {this.completeTask} />
         <Form 
           values={form} 
           onSubmit={this.addTask}
