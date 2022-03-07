@@ -1,6 +1,7 @@
 /*Imports*/
 import React from 'react'
 import TodoList from './TodoList'
+import Form from './Form'
 /*Data*/
 let idx = 0;
 const getIdx = () => ++idx;
@@ -9,8 +10,14 @@ const tasks = [
   {id: getIdx(), name: 'Eat Some Dinner', completed: false},
   {id: getIdx(), name: 'Watch some anime', completed: false},
 ]
+const form = {
+    id: getIdx(), 
+    nameInput: '', 
+    completed: false
+}
 const initialState = {
   tasks,
+  form,
 }
 
 export default class App extends React.Component {
@@ -26,11 +33,12 @@ export default class App extends React.Component {
   // }
 
   render() {
-    const { tasks } = this.state
+    const { tasks, form } = this.state
 
     return (
       <div>
         <TodoList tasks={tasks}/>
+        <Form values={form}/>
       </div>
     )
   }
