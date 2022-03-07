@@ -11,7 +11,7 @@ const tasks = [
   {id: getIdx(), name: 'Watch some anime', completed: false},
 ]
 const form = {
-    id: getIdx(), 
+    id: null, 
     nameInput: '', 
     completed: false
 }
@@ -23,14 +23,31 @@ const initialState = {
 export default class App extends React.Component {
   state = initialState;
   /*Helper Functions*/
-  // completeTask = idx => {
-  //   const newTasks = [ ...tasks ];
-  //   newTasks[idx].completed = true;
-  //   this.setState
-  // }
-  // addTask = task => {
-  //   const newTasks = [ ...tasks, {task, completed: false} ];
-  // }
+  /* allow for tasks compeleted status to be toggled when clicking on task*/
+  /*allow compeleted to be filtered out*/
+  addTask = () => {
+    const {tasks, 
+      form: { id, nameInput, completed } } = this.state;
+    const newTask = { 
+      id: getIdx(), 
+      name: nameInput,
+      completed: completed,
+    };
+    this.setState({
+      ...this.state,
+      form: initialState.form,
+      tasks: [ ...tasks, newTask]
+    });
+  }
+  changeInput = (key, value) => {
+    this.setState({
+      ...this.state,
+      form: { ...this.state.form, [key]: value },
+    })
+  }
+
+
+
 
   render() {
     const { tasks, form } = this.state
@@ -38,7 +55,11 @@ export default class App extends React.Component {
     return (
       <div>
         <TodoList tasks={tasks}/>
-        <Form values={form}/>
+        <Form 
+          values={form} 
+          onSubmit={this.addTask}
+          onChange={this.changeInput}
+        />
       </div>
     )
   }

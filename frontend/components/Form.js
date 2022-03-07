@@ -1,18 +1,26 @@
 import React from 'react'
 
 export default class Form extends React.Component {
+  onSubmit = evt => {
+    evt.preventDefault();
+    this.props.onSubmit();
+  }
+  onChange = evt => {
+    const { value, id } = evt.target
+    this.props.onChange(id, value)
+  }
   render() {
     const { values } = this.props
-    console.log(values);
     return (
-     <form onSubmit={null}>
+     <form onSubmit={this.onSubmit}>
        <input
         value={values.nameInput}
-        onChange={null}
+        onChange={this.onChange}
         type="text"
-        id={values.id}
+        id="nameInput"
         placeholder="Add Todo"
        />
+       <input type="submit"/>
     </form>
     )
   }
