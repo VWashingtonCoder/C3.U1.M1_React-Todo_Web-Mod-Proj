@@ -15,9 +15,11 @@ const form = {
     nameInput: '', 
     completed: false
 }
+const hiddenList = [];
 const initialState = {
   tasks,
   form,
+  hiddenList
 }
 
 export default class App extends React.Component {
@@ -32,8 +34,6 @@ export default class App extends React.Component {
       })
     })
   }
-
-
   addTask = () => {
     const {tasks, 
       form: { id, nameInput, completed } } = this.state;
@@ -54,7 +54,13 @@ export default class App extends React.Component {
       form: { ...this.state.form, [key]: value },
     })
   }
-
+  hideCompleted = () => {
+    this.setState({
+      ...this.state, 
+        tasks: this.state.tasks.filter(task => task.completed !== true), 
+        hiddenList: this.state.tasks.filter(task => task.completed !== false),
+    })
+  } 
 
 
 
@@ -63,11 +69,16 @@ export default class App extends React.Component {
 
     return (
       <div>
-        <TodoList tasks={tasks} complete = {this.completeTask} />
+        <TodoList 
+          tasks={tasks} 
+          complete={this.completeTask} 
+        />
         <Form 
+          tasks={tasks}
           values={form} 
           onSubmit={this.addTask}
           onChange={this.changeInput}
+          hide={this.hideCompleted}  
         />
       </div>
     )

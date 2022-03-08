@@ -10,7 +10,7 @@ export default class Form extends React.Component {
     this.props.onChange(id, value)
   }
   render() {
-    const { values } = this.props
+    const { values, tasks, hide } = this.props
     return (
      <form onSubmit={this.onSubmit}>
        <input
@@ -21,6 +21,7 @@ export default class Form extends React.Component {
         placeholder="Add Todo"
        />
        <input type="submit"/>
+        <button onClick={() => hide()}>Hide Tasks</button>
     </form>
     )
   }
